@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TodoItem from './TodoItem';
 
 export default class TodoList extends Component {
 
@@ -31,7 +32,12 @@ export default class TodoList extends Component {
           {
             this.state.List.map((item, index) => {
               return (
-                <li key={index}>{item}</li>
+                <TodoItem
+                  key={index}
+                  index={index}
+                  content={item}
+                  deleteTodoItem={this.deleteItem.bind(this)}
+                />
               )
             })
           }
@@ -55,6 +61,15 @@ export default class TodoList extends Component {
       return {
         List: [state.inputValue, ...state.List],
         inputValue: ''
+      }
+    })
+  }
+
+  deleteItem(index) {
+    this.setState(prevState => {
+      prevState.List.splice(index, 1)
+      return {
+        List: prevState.List
       }
     })
   }
